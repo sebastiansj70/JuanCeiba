@@ -20,6 +20,7 @@ export class Ticket {
     constructor(telefonoUsuario: number, nombreUsuario: String, horaIngreso: number, horaSalida: number, idCancha: number, valor: number) {
         this.verificarDia(horaIngreso);
         this.validarHorarioTrabajo(horaIngreso);
+        this.verificarHora(horaIngreso);
         this.#telefonoUsuario = telefonoUsuario;
         this.#nombreUsuario = nombreUsuario;
         this.#horaIngreso = horaIngreso;
@@ -30,7 +31,7 @@ export class Ticket {
 
     private validarHorarioTrabajo(horaIngreso: number) {
         let hora = new Date(horaIngreso).getHours()
-        if (hora > HORAINGRESO && hora < HORASALIDA) {
+        if (hora >= HORAINGRESO && hora < HORASALIDA) {
         } else {
             throw new ErrorHoraioTrabajo(
                 `El horario de trabajo es de las 8:00 hasta las 20:00`
@@ -49,7 +50,7 @@ export class Ticket {
 
     private verificarHora(horaIngreso: number) {
         let hora = new Date(horaIngreso).getHours()
-        if (hora > INICIODESCUENTO || hora < FINDESCUENTO) {
+        if (hora >= INICIODESCUENTO && hora < FINDESCUENTO) {
         } else {
             throw new ErrorDescuento(
                 `El descuento solo se aplica de las 12:00 a 14:00`

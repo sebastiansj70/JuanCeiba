@@ -18,12 +18,12 @@ describe('Ticket', () => {
     });
 
     it('el dia de registro es diferente a lunes', () => {
-        const ticket = new _Ticket(32165452, 'Juan', 1626366600000, 1626366600000, 1, 50000)
+        const ticket = new _Ticket(32165452, 'Juan', 1626370200000, 1626370200000, 1, 50000)
 
         expect(ticket.telefonoUsuario).toEqual(32165452);
         expect(ticket.nombreUsuario).toEqual('Juan');
-        expect(ticket.horaIngreso).toEqual(1626366600000);
-        expect(ticket.horaSalida).toEqual(1626366600000);
+        expect(ticket.horaIngreso).toEqual(1626370200000);
+        expect(ticket.horaSalida).toEqual(1626370200000);
         expect(ticket.idCancha).toEqual(1);
         expect(ticket.valor).toEqual(50000);
     });
@@ -36,21 +36,32 @@ describe('Ticket', () => {
 
 
     it('si el horario dentro del rango', () => {
-        const ticket = new _Ticket(32165452, 'Juan', 1626366600000, 1626366600000, 1, 50000)
+        const ticket = new _Ticket(32165452, 'Juan', 1626370200000, 1626370200000, 1, 50000)
 
         expect(ticket.telefonoUsuario).toEqual(32165452);
         expect(ticket.nombreUsuario).toEqual('Juan');
-        expect(ticket.horaIngreso).toEqual(1626366600000);
-        expect(ticket.horaSalida).toEqual(1626366600000);
+        expect(ticket.horaIngreso).toEqual(1626370200000);
+        expect(ticket.horaSalida).toEqual(1626370200000);
         expect(ticket.idCancha).toEqual(1);
         expect(ticket.valor).toEqual(50000);
     });
 
 
-    // it('ticket sin descuento', () => {
-    //     return expect(async () => new _Ticket(32165452, 'Juan', 1626377400000, 1626377400000, 1, 50000))
-    //         .rejects
-    //         .toStrictEqual(new ErrorDescuento('El descuento solo se aplica de las 12:00 a 14:00'));
-    // });
+    it('ticket sin descuento', () => {
+        return expect(async () => new _Ticket(32165452, 'Juan', 1626363000000, 1626363000000, 1, 50000))
+            .rejects
+            .toStrictEqual(new ErrorDescuento('El descuento solo se aplica de las 12:00 a 14:00'));
+    });
+
+    it('ticket con descuento', () => {
+        const ticket = new _Ticket(32165452, 'Juan', 1626373800000, 1626373800000, 1, 50000)
+
+        expect(ticket.telefonoUsuario).toEqual(32165452);
+        expect(ticket.nombreUsuario).toEqual('Juan');
+        expect(ticket.horaIngreso).toEqual(1626373800000);
+        expect(ticket.horaSalida).toEqual(1626373800000);
+        expect(ticket.idCancha).toEqual(1);
+        expect(ticket.valor).toEqual(50000);
+    });
 
 });
