@@ -1,8 +1,12 @@
 import { ErrorLongitudInvalida } from 'src/dominio/errores/error-longitud-invalida';
 import { ErrorDiaTRabajo } from 'src/dominio/errores/error-dia-trabajo';
+import { ErrorHoraioTrabajo } from 'src/dominio/errores/error-horario-trabajo';
+import { ErrorDescuento } from 'src/dominio/errores/error-descuento';
 
-const HOLAiNGRESO = 8;
+const HORAINGRESO = 8;
 const HORASALIDA = 20;
+const INICIODESCUENTO = 12;
+const FINDESCUENTO = 14;
 
 
 export class Ticket {
@@ -26,9 +30,9 @@ export class Ticket {
 
     private validarHorarioTrabajo(horaIngreso: number) {
         let hora = new Date(horaIngreso).getHours()
-        if (hora < HOLAiNGRESO || hora > HORASALIDA) {
+        if (hora > HORAINGRESO && hora < HORASALIDA) {
         } else {
-            throw new ErrorDiaTRabajo(
+            throw new ErrorHoraioTrabajo(
                 `El horario de trabajo es de las 8:00 hasta las 20:00`
             )
         }
@@ -42,6 +46,17 @@ export class Ticket {
             )
         }
     }
+
+    private verificarHora(horaIngreso: number) {
+        let hora = new Date(horaIngreso).getHours()
+        if (hora > INICIODESCUENTO || hora < FINDESCUENTO) {
+        } else {
+            throw new ErrorDescuento(
+                `El descuento solo se aplica de las 12:00 a 14:00`
+            )
+        }
+    }
+
 
     get telefonoUsuario(): number {
         return this.#telefonoUsuario;
